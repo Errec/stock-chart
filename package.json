@@ -3,7 +3,6 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "bootstrap": "4",
     "chart.js": "^2.7.2",
     "eslint": "^5.6.1",
     "fernet": "^0.3.1",
