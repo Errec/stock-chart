@@ -23,6 +23,7 @@ class StockList extends Component {
           .then(res => res.json())
           .then(result => {
               this.setState({ isLoaded: true, stocks: result });
+              console.log(result)
             }, error => {
               this.setState({ isLoaded: true, error });
             });
@@ -41,7 +42,7 @@ class StockList extends Component {
                     {stocks.map(stock => (
                       <Link key={stock.symbol} to={stock.symbol}>
                         <li>
-                          {stock.symbol} {stock.high}
+                          {stock.companyName} <span>{stock.high}</span>
                         </li>
                         <Switch>
                         <Route
@@ -52,7 +53,7 @@ class StockList extends Component {
                         </Switch>
                       </Link>
                     ))}
-                  </ul>;
+                  </ul>
                 </div>
               </Router>;
         }

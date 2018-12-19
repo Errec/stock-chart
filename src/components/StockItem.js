@@ -29,10 +29,10 @@ class StockItem extends Component {
     } else if (!isLoaded) {
       return <div>Loading...</div>;
     } else {
-      return <div>
-        {company.symbol} {company.description}
+      return <div className="StockItem">
+        <p>{company.name} {company.description}</p>
         <StockChart symbol={company.symbol}></StockChart>
-      </div>;
+      </div>
     }
   }
 }

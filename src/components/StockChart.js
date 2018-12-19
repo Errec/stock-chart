@@ -18,6 +18,8 @@ function chartData() {
 }
 
 const options = {
+  responsive: true,
+  maintainAspectRatio: false
 }
 
 
@@ -71,7 +73,7 @@ class StockChart extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className="StockChart">
         <LineChart data={this.state.data}
           options={options} />
       </div>
