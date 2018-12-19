@@ -1,3 +1,5 @@
+[Click here](http://stock-view.surge.sh/) for the live demo.
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 Below you will find some information on how to perform common tasks.<br>
