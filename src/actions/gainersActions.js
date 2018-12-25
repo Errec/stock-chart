@@ -1,4 +1,4 @@
-import { FETCH_GAINERS } from './types.js';
+import { FETCH_GAINERS, FETCH_COMPANY } from './types.js';
 
 export const fetchGainers = () => dispath => {
   fetch("https://api.iextrading.com/1.0/stock/market/list/gainers")
@@ -13,3 +13,18 @@ export const fetchGainers = () => dispath => {
       })
     });
 }
+
+export const fetchCompany = (symbol) => dispath => {
+  fetch(`https://api.iextrading.com/1.0/stock${symbol}/company`)
+  .then(company => company.json())
+  .then(company => {
+    dispath({
+      type: FETCH_COMPANY,
+      payload: {
+        company: company,
+        isLoaded: true
+      }
+    })
+  });
+}
+
