@@ -1,4 +1,4 @@
-import { FETCH_GAINERS, FETCH_COMPANY } from '../actions/types';
+import { FETCH_GAINERS, FETCH_COMPANY, FETCH_CHART } from '../actions/types';
 
 const initialState = {
   gainersData: {
@@ -7,6 +7,10 @@ const initialState = {
   },
   companyData: {
     company: [],
+    isLoaded: false
+  },
+  chartData: {
+    chart: [],
     isLoaded: false
   }
 }
@@ -22,6 +26,11 @@ export default function (state = initialState, action) {
       return {
         ...state,
         companyData: action.payload
+      }
+    case FETCH_CHART:
+      return {
+        ...state,
+        chartData: action.payload
       }
     default:
        return state;
