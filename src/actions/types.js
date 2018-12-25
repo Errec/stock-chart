@@ -1,0 +1,1 @@
+export const FETCH_GAINERS = 'FETCH_GAINERS';

@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import {
     BrowserRouter as Router,
     Route,
     Link,
     Switch
 } from 'react-router-dom'
+import { fetchGainers} from '../actions/gainersActions';
 import '../style/StockList.sass';
 import StockItem from './StockItem';
 
@@ -12,52 +14,49 @@ class StockList extends Component {
     constructor() {
         super();
         this.state = {
-            error: null,
             isLoaded: false,
-            stocks: []
+            error: 0
         };
     }
 
-    componentDidMount() {
-        fetch("https://api.iextrading.com/1.0/stock/market/list/gainers")
-          .then(res => res.json())
-          .then(result => {
-              this.setState({ isLoaded: true, stocks: result });
-              console.log(result)
-            }, error => {
-              this.setState({ isLoaded: true, error });
-            });
+    componentWillMount() {
+      this.props.fetchGainers();
     }
 
     render() {
-        const { error, isLoaded, stocks } = this.state;
-        if (error) {
-            return <div>Error: {error.message}</div>;
-        } else if (!isLoaded) {
-            return <div>Loading...</div>;
-        } else {
-            return <Router>
-                <div className="StockList">
-                  <ul>
-                    {stocks.map(stock => (
-                      <Link key={stock.symbol} to={stock.symbol}>
-                        <li>
-                          {stock.companyName} <span>{stock.high}</span>
-                        </li>
-                        <Switch>
-                        <Route
-                          exact
-                          path={"/" + stock.symbol}
-                          component={StockItem}
-                        />
-                        </Switch>
-                      </Link>
-                    ))}
-                  </ul>
-                </div>
-              </Router>;
+        this.state.isLoaded = this.props.data.isLoaded;
+        this.state.error = this.props.data.gainers.length;
+        if (!this.state.isLoaded) {
+          return <div>Loading...</div>;
+        } else if (this.state.error) {
+          return <Router>
+              <div className="StockList">
+                <ul>
+                  {this.props.data.gainers.map(stock => (
+                    <Link key={stock.symbol} to={stock.symbol}>
+                      <li>
+                        {stock.companyName} <span>{stock.high}</span>
+                      </li>
+                      <Switch>
+                      <Route
+                        exact
+                        path={"/" + stock.symbol}
+                        component={StockItem}
+                      />
+                      </Switch>
+                    </Link>
+                  ))}
+                </ul>
+              </div>
+            </Router>;
+        } else if (!this.state.error) {
+          return <p>Error Loading Data</p>
         }
     }
 }
 
-export default StockList;
+const mapStateToProps = state => ({
+  data : state.gainers.gainersData
+});
+
+export default connect(mapStateToProps, { fetchGainers })(StockList);
